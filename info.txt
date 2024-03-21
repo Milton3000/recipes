@@ -7,3 +7,7 @@ Nodemon är som --watch, slipper stänga ner och resetta.
 mongodb+srv://MiltonK:test123@recipedatabase.i7qnalj.mongodb.net/?retryWrites=true&w=majority&appName=recipedatabase
 
 kortare: mongodb+srv://MiltonK:<password>@recipedatabase.i7qnalj.mongodb.net/
+
+
+// useNewUrlParser: true,
+// useUnifiedTopology: true
