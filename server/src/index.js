@@ -15,7 +15,7 @@ app.use(cors());
 app.use("/auth", userRouter);
 
 
-mongoose.connect("mongodb+srv://MiltonK:test123@recipedatabase.i7qnalj.mongodb.net/"
+mongoose.connect("mongodb+srv://MiltonK:test123@recipedatabase.i7qnalj.mongodb.net/?retryWrites=true&w=majority&appName=recipedatabase/"
 );
 
 
