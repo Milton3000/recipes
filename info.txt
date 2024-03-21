@@ -8,6 +8,19 @@ mongodb+srv://MiltonK:test123@recipedatabase.i7qnalj.mongodb.net/?retryWrites=tr
 
 kortare: mongodb+srv://MiltonK:<password>@recipedatabase.i7qnalj.mongodb.net/
 
+req/res
+
+req = used for getting data from whoever made the api request to the endpoint
+
+res = to send the data back to whoever made that api request
+
+router.post("/register", async (req, res) => {
+const { username, password } = req.body;
+});
+
+When we make this API request, we make sure that we send in an object containing the username and password. This is how we define endpoints in an API
+
+We want to confirm that 
 
 // useNewUrlParser: true,
 // useUnifiedTopology: true
