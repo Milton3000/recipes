@@ -6,6 +6,8 @@ Nodemon är som --watch, slipper stänga ner och resetta.
 
 Bcrypt för Password Hashing
 
+Axios = Replacement for the Fetch API
+
 mongodb+srv://MiltonK:test123@recipedatabase.i7qnalj.mongodb.net/?retryWrites=true&w=majority&appName=recipedatabase
 
 kortare: mongodb+srv://MiltonK:<password>@recipedatabase.i7qnalj.mongodb.net/
@@ -37,3 +39,20 @@ Sen JSON: {}
         <input type='text' id='username' onChange={(event => setUsername(event.target.value)
 
         event.target.value = setting the username state to be equal to the value of the field everytime there are any changes in the field
+
+
+        Gör en const Form = ({ username, setUsername, password, setPassword, label }) => {}
+
+        för att re-use detta i både Login och Register komponenterna. Om du tittar i filen så ser du att både Login och Register är typ identiska och använder sig av propsen från Form komponenten. 
+
+
+API POST:
+
+ try {
+  await axios.post("http://localhost:3001/auth/register", {username, password});
+  alert("Registration Completed! Now, login.")
+ } catch (error) {
+  console.error(error)
+ }
+
+Make the post request, put the url, and then put in the object of the body of the request. In this case, username and password, same as we used for the /routes/users.js 
