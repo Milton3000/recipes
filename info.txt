@@ -32,3 +32,8 @@ When we make this API request, we make sure that we send in an object containing
 POST: http://localhost:3001/auth/register
 
 Sen JSON: {}
+
+
+        <input type='text' id='username' onChange={(event => setUsername(event.target.value)
+
+        event.target.value = setting the username state to be equal to the value of the field everytime there are any changes in the field
