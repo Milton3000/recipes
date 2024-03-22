@@ -1,33 +1,45 @@
-import express from 'express'
-import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
-import { UserModel } from '../models/Users.js'
+import express from "express";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { UserModel } from "../models/Users.js";
 
 const router = express.Router();
 
-
 router.post("/register", async (req, res) => {
-const { username, password } = req.body;
+  const { username, password } = req.body;
 
-// Making request to this collection here. It will return a promise so either try/catch or async/await.
-const user = await UserModel.findOne({ username });
+  // Making request to this collection here. It will return a promise so either try/catch or async/await.
+  const user = await UserModel.findOne({ username });
 
-if (user) {
-    return res.json({ message: "User already exists!" })
-}
+  if (user) {
+    return res.json({ message: "User already exists!" });
+  }
 
-const hashedPassword = await bcrypt.hash(password, 10) 
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-const newUser = new UserModel({ username, password: hashedPassword });
-await newUser.save();
+  const newUser = new UserModel({ username, password: hashedPassword });
+  await newUser.save();
 
-res.json({message: " User Registered Successfully!" });
+  res.json({ message: " User Registered Successfully!" });
 });
 
+router.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  const user = await UserModel.findOne({ username });
 
+  if (!user) {
+    return res.json({ message: "User Doesn't Exist." });
+  }
 
-router.post("/login");
+  const isPasswordValid = await bcrypt.compare(password, user.password);
 
+  if (!isPasswordValid) {
+    return res.json({ message: "Username or Password Is Incorrect" });
+  }
 
+  const token = jwt.sign({ id: user._id }, "secret"); 
+  res.json({ token, userID: user._id });
+  //Secret used to verify the user is authentic. 
+});
 
 export { router as userRouter };

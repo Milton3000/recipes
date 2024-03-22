@@ -25,3 +25,10 @@ When we make this API request, we make sure that we send in an object containing
 
 // useNewUrlParser: true,
 // useUnifiedTopology: true
+
+
+@ Insomnia:
+
+POST: http://localhost:3001/auth/register
+
+Sen JSON: {}
