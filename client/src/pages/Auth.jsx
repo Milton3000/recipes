@@ -17,13 +17,13 @@ const Auth = () => {
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+// eslint-disable-next-line 
   const [_, setCookies] = useCookies(["access_token"]); // Define the cookie we want to use, only need access to the function that sets the cookie.
 
   const navigate = useNavigate(); // This is a function that when you call it, it will redirect you to whichever path you put inside.
 
   const onSubmit = async (event) => {
-    event.preventDefaul();
+    event.preventDefault();
     // Sending back our authentication token.
     // This response should receive everything that is sent back from the API.
     try {
