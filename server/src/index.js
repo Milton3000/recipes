@@ -14,6 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/auth", userRouter);
+app.use("/recipes", recipesRouter);
 
 
 mongoose.connect("mongodb+srv://MiltonK:test123@recipedatabase.i7qnalj.mongodb.net/?retryWrites=true&w=majority&appName=recipedatabase/"
