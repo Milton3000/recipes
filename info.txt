@@ -56,3 +56,7 @@ API POST:
  }
 
 Make the post request, put the url, and then put in the object of the body of the request. In this case, username and password, same as we used for the /routes/users.js 
+
+*VIKTIGT*
+
+Måste köra cd client och cd server och sedan npm start på vardera för att både backend och frontend ska connectas. 

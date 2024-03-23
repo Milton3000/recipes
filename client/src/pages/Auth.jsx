@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 const Auth = () => {
   return (
@@ -16,6 +17,25 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [_, setCookies] = useCookies(["access_token"]);
+
+  const onSubmit = async (event) => {
+    event.preventDefaul();
+    // Sending back our authentication token.
+    // This response should receive everything that is sent back from the API.
+    try {
+      const response = await axios.post("http://localhost:3001/auth/login", {
+        username,
+        password
+      });
+      // Set the token into our Cookies
+      setCookies();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   return (
     <Form
       username={username}
@@ -23,6 +43,7 @@ const Login = () => {
       password={password}
       setPassword={setPassword}
       label="Login"
+      onSubmit={onSubmit}
     />
   );
 };
@@ -33,13 +54,14 @@ const Register = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    // Not sending anything from this request, just try to create the user.
     try {
       await axios.post("http://localhost:3001/auth/register", { username, password });
       alert("Registration Completed! Now, login.");
     } catch (error) {
       console.error(error);
     }
-  };  
+  };
 
   return (
     <Form
