@@ -60,3 +60,10 @@ Make the post request, put the url, and then put in the object of the body of th
 *VIKTIGT*
 
 Måste köra cd client och cd server och sedan npm start på vardera för att både backend och frontend ska connectas. 
+
+
+setCookies("access_token", response.data.token)
+From routes/users.js we send back a json containing a token field and a user Id field, setting the cookie to have that value.
+
+useNavigate = redirects to whichever path. 
+

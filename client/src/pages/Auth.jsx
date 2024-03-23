@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
+import { useNavigate } from 'react-router-dom'; 
 
 const Auth = () => {
   return (
@@ -17,7 +18,9 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [_, setCookies] = useCookies(["access_token"]); // Define the cookie we want to use, only need access to the function that sets the cookie.
+
+  const navigate = useNavigate(); // This is a function that when you call it, it will redirect you to whichever path you put inside.
 
   const onSubmit = async (event) => {
     event.preventDefaul();
@@ -29,7 +32,10 @@ const Login = () => {
         password
       });
       // Set the token into our Cookies
-      setCookies();
+      setCookies("access_token", response.data.token);
+      // After setting the cookie to have that value (token), we want to store our userID that we're sending back inside of our localstorage for quick access.
+      window.localStorage.setItem("userID", response.data.userID);
+      navigate("/"); // Navigates to Home.
     } catch (error) {
       console.error(error);
     }
