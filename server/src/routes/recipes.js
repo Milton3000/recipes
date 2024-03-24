@@ -27,6 +27,18 @@ router.post("/", async (req, res) => {
 });
 
 
+router.put("/", async (req, res) => {
+{userId, recipeId}
+    try {
+        // const response = await RecipeModel.find({});
+        const response = await recipe.save();
+        res.json(recipe);
+    } catch (error) {
+        res.json(error)
+    }
+});
+
+
 
 
 export {router as recipesRouter};
