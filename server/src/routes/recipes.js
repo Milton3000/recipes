@@ -35,7 +35,7 @@ router.put("/", async (req, res) => {
     try {
         const recipe = await RecipeModel.findById(req.body.recipeID);
         const user = await UserModel.findById(req.body.userID);
-        user.savedRecipes.push(recipe);
+        user.savedRecipes.push(recipe); // Want to add it
         await user.save();
         res.json({ savedRecipes: user.savedRecipes });
     } catch (error) {
@@ -44,6 +44,31 @@ router.put("/", async (req, res) => {
 });
 
 
+// In the Frontend we want to get a list of all the recipe ID's that a user who is logged in to at the moment have saved. Need to make a specific route that is going to get the ID's that were saved by a user.
+
+router.get("/savedRecipes/ids", async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.body.userID);
+        res.json({ savedRecipes: user?.savedRecipes });
+    } catch (error) {
+        res.json(error)
+    }
+});
+
+router.get("/savedRecipes", async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.body.userID);
+        const savedRecipes = await RecipeModel.find({
+            _id: {$in: user.savedRecipes },
+        });
+        res.json({ savedRecipes: user?.savedRecipes });
+    } catch (error) {
+        res.json(error)
+    }
+});
+
+// Above code: Trying to get those where their ID is in the user.savedRecipes. So saved recipes from the user is an array of recipe id's.
+// So we want to grab the saved recipes where their id is inside of the list over here: _id: {$in: user.savedRecipes }.
 
 
 export {router as recipesRouter};
