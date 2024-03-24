@@ -9,4 +9,10 @@ const RecipeSchema = new mongoose.Schema({
   userOwner: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true},
 });
 
-export const RecipeModel = mongoose.model("recipes", RecipeModel);
+// export const RecipeModel = mongoose.model("recipes", RecipeModel);
+
+const RecipeModel = mongoose.model("recipes", RecipeSchema); // Initialize RecipeModel First
+
+export { RecipeModel }; // Export RecipeModel after initialization
+
+
