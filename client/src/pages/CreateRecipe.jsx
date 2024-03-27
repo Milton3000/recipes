@@ -37,6 +37,8 @@ const CreateRecipe = () => {
     setRecipe({...recipe, ingredients: [...recipe.ingredients, ""] });
   }
 
+  console.log(recipe)
+
   return (
     <div className='create-recipe'>
 
@@ -55,7 +57,7 @@ const CreateRecipe = () => {
           onChange={(event) => handleIngredientChange(event, index)}/>
         ))};
 
-        <button onClick={addIngredient}> Add Ingredient </button>
+        <button onClick={addIngredient} type='button'> Add Ingredient </button>
 
         <label htmlFor='instructions'> Inscructions </label>
         <textarea id='instructions' name='instructions' onChange={handleChange}></textarea>
@@ -65,6 +67,8 @@ const CreateRecipe = () => {
 
         <label htmlFor='cookingTime'> Cooking Time (minutes) </label>
         <input type='number' id='cookingTime' name='cookingTime' onChange={handleChange} />
+        
+        <button type='submit'> Create Recipe </button>
       </form>
     </div>
   )
