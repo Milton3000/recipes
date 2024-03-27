@@ -16,7 +16,7 @@ const CreateRecipe = () => {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setRecipe({ ...recipe, [name]: value });
-  }
+  };
 
   //Quite a big form and all of the functions are the same so we create a handleChange that will do all of the logic.
 
@@ -30,19 +30,16 @@ const CreateRecipe = () => {
         <label htmlFor='name'> Name </label>
         <input type='text' id='name' name='name' onChange={handleChange} />
 
-        <label htmlFor='description'> Description </label>
-        <textarea id='description' name='description'></textarea>
-
         <label htmlFor='ingredients'> Ingredients </label>
 
         <label htmlFor='instructions'> Inscructions </label>
-        <textarea id='instructions' name='instructions'></textarea>
+        <textarea id='instructions' name='instructions' onChange={handleChange}></textarea>
 
         <label htmlFor='imageUrl'> Image URL </label>
-        <input type='text' id='imageUrl' name='imageUrl' />
+        <input type='text' id='imageUrl' name='imageUrl' onChange={handleChange} />
 
         <label htmlFor='cookingTime'> Cooking Time (minutes) </label>
-        <input type='number' id='cookingTime' name='cookingTime' />
+        <input type='number' id='cookingTime' name='cookingTime' onChange={handleChange} />
       </form>
     </div>
   )
