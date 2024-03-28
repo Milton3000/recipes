@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { useGetUserID } from '../hooks/useGetUserID';
 
 const CreateRecipe = () => {
+  const userID = useGetUserID();
 
   // An object containing all of the inputs
   const [recipe, setRecipe] = useState({
@@ -10,8 +12,10 @@ const CreateRecipe = () => {
     instructions: "",
     imageUrl: "",
     cookingTime: 0,
-    userOwner: 0,
+    userOwner: userID,
   });
+
+
 
   //Quite a big form and all of the functions are the same so we create a handleChange that will do all of the logic.
   // Function below is just changing one specific part of the object.
