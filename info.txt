@@ -82,3 +82,9 @@ JSON INFO:
 	"cookingTime": 30,
 	"userOwner": "65fedc3d146a2ac63456c1e1"
 }
+
+
+USER:
+
+MiltonK
+password
