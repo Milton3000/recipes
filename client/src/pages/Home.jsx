@@ -30,6 +30,8 @@ const Home = () => {
             <div className='instructions'>
           <p> {recipe.instructions} </p>
             </div>
+            <img src={recipe.imageUrl} alt={recipe.name} />
+            <p> Cooking Time: {recipe.cookingTime} (minutes) </p>
           </li>
         ))}
       </ul>
