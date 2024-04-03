@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useGetUserID } from '../hooks/useGetUserID';
 
 const Home = () => {
 
   const [recipes, setRecipes] = useState([]);
+  const userID = useGetUserID();
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -18,8 +20,13 @@ const Home = () => {
   }, []);
 
   const saveRecipe = async (recipeID) => {
-
-  }
+    try {
+      const response = await axios.put("http://localhost:3001/recipes", {recipeID, userID});
+      console.log(response)
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div> 
