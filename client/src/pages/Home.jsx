@@ -17,6 +17,10 @@ const Home = () => {
     fetchRecipe();
   }, []);
 
+  const saveRecipe = async (recipeID) => {
+
+  }
+
   return (
     <div> 
 
@@ -26,6 +30,8 @@ const Home = () => {
           <li key={recipe._id}>
             <div>
               <h2> {recipe.name} </h2>
+              <button onClick={() => saveRecipe(recipe._id)}> Save </button>
+              <button> Like ❤️ </button>
             </div>
             <div className='instructions'>
           <p> {recipe.instructions} </p>
