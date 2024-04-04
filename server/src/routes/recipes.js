@@ -67,6 +67,9 @@ router.get("/savedRecipes", async (req, res) => {
     }
 });
 
+// Above code: Trying to get those where their ID is in the user.savedRecipes. So saved recipes from the user is an array of recipe id's.
+// So we want to grab the saved recipes where their id is inside of the list over here: _id: {$in: user.savedRecipes }.
+
 router.get("/likedRecipes/ids/:userID", async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.userID);
@@ -76,8 +79,7 @@ router.get("/likedRecipes/ids/:userID", async (req, res) => {
     }
 });
 
-// Above code: Trying to get those where their ID is in the user.savedRecipes. So saved recipes from the user is an array of recipe id's.
-// So we want to grab the saved recipes where their id is inside of the list over here: _id: {$in: user.savedRecipes }.
+
 
 
 export {router as recipesRouter};
