@@ -34,14 +34,15 @@ const Home = () => {
   const saveRecipe = async (recipeID) => {
     try {
       const response = await axios.put("http://localhost:3001/recipes", {recipeID, userID});
-      console.log(response)
+      setSavedRecipes(response.data.savedRecipes);
     } catch (error) {
       console.error(error);
     }
   };
 
   // Functionality to add it to the button using disabled true/false. Button will not be clickable if it's saved.
-  const isRecipeSaved = (id) => savedRecipes.includes(id);
+const isRecipeSaved = (id) => savedRecipes && savedRecipes.includes(id);
+// const isRecipeSaved = (id) => savedRecipes.includes(id);
 
   return (
     <div> 
@@ -52,7 +53,10 @@ const Home = () => {
           <li key={recipe._id}>
             <div>
               <h2> {recipe.name} </h2>
-              <button onClick={() => saveRecipe(recipe._id)} disabled={isRecipeSaved(recipe._id)}> Save </button>
+              <button onClick={() => saveRecipe(recipe._id)} disabled={isRecipeSaved(recipe._id)}> 
+              
+              {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
+               </button>
               <button> Like ❤️ </button>
             </div>
             <div className='instructions'>
