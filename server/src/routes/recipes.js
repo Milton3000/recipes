@@ -67,6 +67,15 @@ router.get("/savedRecipes", async (req, res) => {
     }
 });
 
+router.get("/likedRecipes/ids/:userID", async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.params.userID);
+        res.json({ likedRecipes: user?.likedRecipes });
+    } catch (error) {
+        res.json(error)
+    }
+});
+
 // Above code: Trying to get those where their ID is in the user.savedRecipes. So saved recipes from the user is an array of recipe id's.
 // So we want to grab the saved recipes where their id is inside of the list over here: _id: {$in: user.savedRecipes }.
 

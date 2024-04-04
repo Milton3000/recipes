@@ -92,3 +92,9 @@ test123
 Mille
 potatis
 
+
+// Added a check for createdBy
+
+  // Functionality to add it to the button using disabled true/false. Button will not be clickable if it's saved.
+const isRecipeSaved = (id) => savedRecipes && savedRecipes.includes(id);
+// const isRecipeSaved = (id) => savedRecipes.includes(id);

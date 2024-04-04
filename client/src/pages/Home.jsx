@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useGetUserID } from '../hooks/useGetUserID';
 
 const Home = () => {
-
   const [recipes, setRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
-
+  const [likedRecipes, setLikedRecipes] = useState([]);
   const userID = useGetUserID();
 
   useEffect(() => {
-    const fetchRecipe = async () => {
+    const fetchRecipes = async () => {
       try {
         const response = await axios.get("http://localhost:3001/recipes");
         setRecipes(response.data);
@@ -18,57 +17,79 @@ const Home = () => {
         console.error(error);
       }
     };
-    const fetchSavedRecipe = async () => {
+
+    const fetchSavedRecipes = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/recipes/savedRecipes/ids/${userID}`);
-        setSavedRecipes(response.data.savedRecipes);
+        setSavedRecipes(response.data.savedRecipes || []);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchRecipe();
-    fetchSavedRecipe();
-  }, []);
+    const fetchLikedRecipes = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/recipes/likedRecipes/ids/${userID}`);
+        setLikedRecipes(response.data.likedRecipes || []);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchRecipes();
+    fetchSavedRecipes();
+    fetchLikedRecipes();
+  }, [userID]);
 
   const saveRecipe = async (recipeID) => {
     try {
-      const response = await axios.put("http://localhost:3001/recipes", {recipeID, userID});
-      setSavedRecipes(response.data.savedRecipes);
+      const response = await axios.put("http://localhost:3001/recipes", { recipeID, userID });
+      setSavedRecipes(response.data.savedRecipes || []);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const likeRecipe = async (recipeID) => {
+    try {
+      const response = await axios.put("http://localhost:3001/recipes/like", { recipeID, userID });
+      setLikedRecipes(response.data.likedRecipes || []);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   // Functionality to add it to the button using disabled true/false. Button will not be clickable if it's saved.
-const isRecipeSaved = (id) => savedRecipes && savedRecipes.includes(id);
-// const isRecipeSaved = (id) => savedRecipes.includes(id);
+  const isRecipeSaved = (id) => savedRecipes.includes(id);
+  const isRecipeLiked = (id) => likedRecipes.includes(id);
 
   return (
-    <div> 
-
-      <h1> Recipes </h1>
+    <div>
+      <h1>Recipes</h1>
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe._id}>
             <div>
-              <h2> {recipe.name} </h2>
-              <button onClick={() => saveRecipe(recipe._id)} disabled={isRecipeSaved(recipe._id)}> 
-              
-              {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
-               </button>
-              <button> Like ❤️ </button>
+              <h2>{recipe.name}</h2>
+              <button onClick={() => saveRecipe(recipe._id)} disabled={isRecipeSaved(recipe._id)}>
+                {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
+              </button>
+              {recipe.createdBy && !recipe.createdBy.includes(userID) && ( // Added a check for createdBy
+                <button onClick={() => likeRecipe(recipe._id)} disabled={isRecipeLiked(recipe._id)}>
+                  {isRecipeLiked(recipe._id) ? "Liked" : "Like ❤️"}
+                </button>
+              )}
             </div>
             <div className='instructions'>
-          <p> {recipe.instructions} </p>
+              <p>{recipe.instructions}</p>
             </div>
             <img src={recipe.imageUrl} alt={recipe.name} />
-            <p> Cooking Time: {recipe.cookingTime} (minutes) </p>
+            <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 };
 
-export default Home
+export default Home;
