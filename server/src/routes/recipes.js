@@ -46,9 +46,9 @@ router.put("/", async (req, res) => {
 
 // In the Frontend we want to get a list of all the recipe ID's that a user who is logged in to at the moment have saved. Need to make a specific route that is going to get the ID's that were saved by a user.
 
-router.get("/savedRecipes/ids", async (req, res) => {
+router.get("/savedRecipes/ids/:userID", async (req, res) => {
     try {
-        const user = await UserModel.findById(req.body.userID);
+        const user = await UserModel.findById(req.params.userID);
         res.json({ savedRecipes: user?.savedRecipes });
     } catch (error) {
         res.json(error)
