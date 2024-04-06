@@ -75,12 +75,12 @@ const Home = () => {
                 {isRecipeSaved(recipe._id) ? "Saved" : "Save"}
               </button>
 
-              {/* REVISIT THIS, NOT WORKING  */}
-              {recipe.createdBy && !recipe.createdBy.includes(userID) && ( // Added a check for createdBy
-                <button onClick={() => likeRecipe(recipe._id)} disabled={isRecipeLiked(recipe._id)}>
-                  {isRecipeLiked(recipe._id) ? "Liked" : "Like ❤️"}
-                </button>
-              )}
+{recipe.userOwner && !recipe.userOwner.includes(userID) && recipe.userOwner !== userID && (
+  <button onClick={() => likeRecipe(recipe._id)} disabled={isRecipeLiked(recipe._id)}>
+    {isRecipeLiked(recipe._id) ? "Liked" : "Like ❤️"}
+  </button>
+)}
+
             </div>
             <div className='instructions'>
               <p>{recipe.instructions}</p>
