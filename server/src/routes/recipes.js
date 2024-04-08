@@ -1,8 +1,7 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import { RecipeModel } from "../models/Recipes.js";
 import { UserModel } from '../models/Users.js';
-
+import { verifyToken } from './users.js';
 
 const router = express.Router();
 
@@ -17,7 +16,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
     const recipe = new RecipeModel(req.body)
     try {
         // const response = await RecipeModel.find({});
@@ -83,16 +82,3 @@ router.get("/likedRecipes/ids/:userID", async (req, res) => {
 
 export {router as recipesRouter};
 
-
-// 403 = Not authorized
-export const verifyToken = (req, res, next) => {
-    const token = req.headers.authorization;
-    if (token) {
-        jwt.verify(token, "secret", (err) => {
-            if (err) return res.sendStatus(403);
-            next();
-        });
-    } else {
-        res.sendStatus(401);
-    }
-};
