@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { RecipeModel } from "../models/Recipes.js";
 import { UserModel } from '../models/Users.js';
 
+
 const router = express.Router();
 
 
@@ -80,6 +81,18 @@ router.get("/likedRecipes/ids/:userID", async (req, res) => {
 });
 
 
-
-
 export {router as recipesRouter};
+
+
+// 403 = Not authorized
+export const verifyToken = (req, res, next) => {
+    const token = req.headers.authorization;
+    if (token) {
+        jwt.verify(token, "secret", (err) => {
+            if (err) return res.sendStatus(403);
+            next();
+        });
+    } else {
+        res.sendStatus(401);
+    }
+};
