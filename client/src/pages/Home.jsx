@@ -43,7 +43,7 @@ const Home = () => {
     fetchLikedRecipes();
 
     if (cookies.access_token) fetchSavedRecipes();
-  }, []);
+  }, [cookies.access_token, userID]); /* can skip the dependency array perhaps */
 
   const saveRecipe = async (recipeID) => {
     try {
