@@ -7,7 +7,7 @@ const Home = () => {
   const [recipes, setRecipes] = useState([]);
   const [savedRecipes, setSavedRecipes] = useState([]);
   const [likedRecipes, setLikedRecipes] = useState([]);
-  const [cookies, _] = useCookies(["access_token"]);
+  const [cookies, _] = useCookies(["access_token"]); /* don't need setCookies so keeping it empty */
 
   const userID = useGetUserID();
 
