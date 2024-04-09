@@ -31,7 +31,7 @@ router.post("/", verifyToken, async (req, res) => {
 // userId = To find which user we want to change their saved recipes field.
 // recipeId = To insert into that array.
 
-router.put("/", async (req, res) => {
+router.put("/", verifyToken, async (req, res) => {
     try {
         const recipe = await RecipeModel.findById(req.body.recipeID);
         const user = await UserModel.findById(req.body.userID);
