@@ -40,9 +40,10 @@ const Home = () => {
     };
 
     fetchRecipes();
-    fetchSavedRecipes();
     fetchLikedRecipes();
-  }, [userID]);
+
+    if (cookies.access_token) fetchSavedRecipes();
+  }, []);
 
   const saveRecipe = async (recipeID) => {
     try {
