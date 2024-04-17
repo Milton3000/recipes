@@ -22,6 +22,7 @@ const Login = () => {
 
   const navigate = useNavigate(); // This is a function that when you call it, it will redirect you to whichever path you put inside.
 
+
   const onSubmit = async (event) => {
     event.preventDefault();
     // Sending back our authentication token.
@@ -31,6 +32,17 @@ const Login = () => {
         username,
         password
       });
+  
+      if (response.data.message === "User Doesn't Exist.") {
+        // Display an alert if the user doesn't exist
+        alert("User doesn't exist. Please register first.");
+        return;
+      } else if (response.data.message === "Username or Password Is Incorrect") {
+        // Display an alert if the username or password is incorrect
+        alert("Username or password is incorrect. Please try again.");
+        return;
+      }
+  
       // Set the token into our Cookies
       setCookies("access_token", response.data.token);
       // After setting the cookie to have that value (token), we want to store our userID that we're sending back inside of our localstorage for quick access.
@@ -40,7 +52,7 @@ const Login = () => {
       console.error(error);
     }
   };
-
+  
 
   return (
     <Form

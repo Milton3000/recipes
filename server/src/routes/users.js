@@ -25,22 +25,37 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  console.log("Received login request for username:", username);
+
   const user = await UserModel.findOne({ username });
 
+  // Check if user exists
   if (!user) {
+    console.log("User not found.");
     return res.json({ message: "User Doesn't Exist." });
   }
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  // Compare hashed passwords
+  try {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log("Password validation result:", isPasswordValid);
 
-  if (!isPasswordValid) {
-    return res.json({ message: "Username or Password Is Incorrect" });
+    if (!isPasswordValid) {
+      console.log("Incorrect password.");
+      return res.json({ message: "Username or Password Is Incorrect" });
+    }
+
+    const token = jwt.sign({ id: user._id }, "secret");
+    console.log("Login successful for username:", username);
+    res.json({ token, userID: user._id });
+  } catch (error) {
+    console.error("Error comparing passwords:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
-
-  const token = jwt.sign({ id: user._id }, "secret"); 
-  res.json({ token, userID: user._id });
-  //Secret used to verify the user is authentic. 
 });
+
+
+
 
 export { router as userRouter };
 
