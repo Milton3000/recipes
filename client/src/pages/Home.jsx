@@ -4,6 +4,8 @@ import { useGetUserID } from '../hooks/useGetUserID';
 import { useCookies } from "react-cookie";
 import UpdateRecipe from '../pages/UpdateRecipe';
 import DeleteRecipe from '../pages/DeleteRecipe';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -76,31 +78,37 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="container mt-5">
       <h1>Recipes</h1>
-      <ul>
-        {recipes.map((recipe) => (
-          <li key={recipe._id}>
-            <div>
-              <h2>{recipe.name}</h2>
-              <button onClick={() => saveRecipe(recipe._id)}>
-                {isRecipeSaved(recipe._id) ? "Unsave" : "Save"}
-              </button>
-              {recipe.userOwner === userID && (
-                <>
-                  <UpdateRecipe recipeID={recipe._id} userID={userID} authToken={authToken} updateRecipes={updateRecipes} />
-                  <DeleteRecipe recipeID={recipe._id} userID={userID} authToken={authToken} updateRecipes={updateRecipes} />
-                </>
-              )}
+      {recipes.map((recipe) => (
+        <div key={recipe._id} className="row mb-4">
+          <div className="col-md-4 mb-3">
+            <div className="card h-100">
+              <div className="card-body">
+                <h5 className="card-title">{recipe.name}</h5>
+                <p className="card-text">{recipe.instructions}</p>
+                <p className="card-text">Cooking Time: {recipe.cookingTime} (minutes)</p>
+                <img src={recipe.imageUrl} className="card-img-top" alt={recipe.name} />
+              </div>
+              <div className="card-footer d-flex justify-content-between align-items-center">
+                <div>
+                  <button onClick={() => saveRecipe(recipe._id)} className={`btn ${isRecipeSaved(recipe._id) ? 'btn-secondary' : 'btn-primary'}`}>
+                    {isRecipeSaved(recipe._id) ? "Unsave" : "Save"}
+                  </button>
+                  {recipe.userOwner === userID && (
+                    <DeleteRecipe recipeID={recipe._id} userID={userID} authToken={authToken} updateRecipes={updateRecipes} />
+                  )}
+                </div>
+              </div>
             </div>
-            <div className='instructions'>
-              <p>{recipe.instructions}</p>
+          </div>
+          {recipe.userOwner === userID && (
+            <div className="col-md-8">
+              <UpdateRecipe recipeID={recipe._id} userID={userID} authToken={authToken} updateRecipes={updateRecipes} />
             </div>
-            <img src={recipe.imageUrl} alt={recipe.name} />
-            <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
-          </li>
-        ))}
-      </ul>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

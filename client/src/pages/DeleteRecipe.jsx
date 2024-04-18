@@ -18,7 +18,7 @@ const DeleteRecipe = ({ recipeID, userID, authToken }) => {
 
   return (
     <div>
-      <button onClick={handleDelete}>Delete Recipe</button>
+      <button className="btn btn-danger mt-2" onClick={handleDelete}>Delete Recipe</button>
     </div>
   );
 };
