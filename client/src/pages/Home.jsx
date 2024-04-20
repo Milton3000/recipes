@@ -1,11 +1,12 @@
+// Home.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useGetUserID } from '../hooks/useGetUserID';
 import { useCookies } from "react-cookie";
 import UpdateRecipe from '../pages/UpdateRecipe';
 import DeleteRecipe from '../pages/DeleteRecipe';
+import LikeRecipe from '../pages/LikeRecipe'; // Import the LikeRecipe component
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const Home = () => {
   const [recipes, setRecipes] = useState([]);
@@ -77,6 +78,15 @@ const Home = () => {
     }
   };
 
+  const updateLikes = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/recipes");
+      setRecipes(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="container mt-5">
       <h1>Recipes</h1>
@@ -97,6 +107,9 @@ const Home = () => {
                   </button>
                   {recipe.userOwner === userID && (
                     <DeleteRecipe recipeID={recipe._id} userID={userID} authToken={authToken} updateRecipes={updateRecipes} />
+                  )}
+                  {recipe.userOwner !== userID && (
+                    <LikeRecipe recipe={recipe} userID={userID} authToken={authToken} updateLikes={updateLikes} />
                   )}
                 </div>
               </div>
