@@ -43,6 +43,11 @@ const Home = () => {
 
   const saveRecipe = async (recipeID) => {
     try {
+      if (!cookies.access_token) {
+        alert("You are not authorized to do this. Please login or register first.");
+        return;
+      }
+  
       const alreadySaved = savedRecipes.includes(recipeID);
 
       if (alreadySaved) {

@@ -97,10 +97,8 @@ router.get("/savedRecipes/:userID", async (req, res) => {
 // Above code: Trying to get those where their ID is in the user.savedRecipes. So saved recipes from the user is an array of recipe id's.
 // So we want to grab the saved recipes where their id is inside of the list over here: _id: {$in: user.savedRecipes }.
 
-// Add this route to your recipesRouter
+// PUT REQUEST FOR 
 
-// Backend: recipes.js
-// Add this route to your recipesRouter
 router.put("/like/:recipeID", verifyToken, async (req, res) => {
     try {
         const { userID } = req.body;
@@ -142,38 +140,38 @@ router.put("/like/:recipeID", verifyToken, async (req, res) => {
     }
 });
 
-// Backend: recipes.js
-router.delete("/like/:recipeID", verifyToken, async (req, res) => {
-    try {
-        const { userID } = req.query;
-        console.log("Unliking recipe for user:", userID);
-        // Find the user
-        const user = await UserModel.findById(userID);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
+// // Backend: recipes.js KAN SKIPPA FÖRMODLIGEN, KÖR BARA PUT.
+// router.delete("/like/:recipeID", verifyToken, async (req, res) => {
+//     try {
+//         const { userID } = req.query;
+//         console.log("Unliking recipe for user:", userID);
+//         // Find the user
+//         const user = await UserModel.findById(userID);
+//         if (!user) {
+//             return res.status(404).json({ error: "User not found" });
+//         }
 
-        // Check if the user has likedRecipes array
-        if (!user.likedRecipes) {
-            user.likedRecipes = [];
-        }
+//         // Check if the user has likedRecipes array
+//         if (!user.likedRecipes) {
+//             user.likedRecipes = [];
+//         }
 
-        // Check if the recipe is in the user's likedRecipes
-        const index = user.likedRecipes.indexOf(recipeID);
-        if (index !== -1) {
-            // If the recipe is liked, remove it from the likedRecipes array
-            user.likedRecipes.splice(index, 1);
-            await user.save();
-            res.json({ success: true });
-        } else {
-            // If the recipe is not liked, send an error message
-            res.status(404).json({ error: "Recipe is not liked by the user" });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
+//         // Check if the recipe is in the user's likedRecipes
+//         const index = user.likedRecipes.indexOf(recipeID);
+//         if (index !== -1) {
+//             // If the recipe is liked, remove it from the likedRecipes array
+//             user.likedRecipes.splice(index, 1);
+//             await user.save();
+//             res.json({ success: true });
+//         } else {
+//             // If the recipe is not liked, send an error message
+//             res.status(404).json({ error: "Recipe is not liked by the user" });
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: "Internal Server Error" });
+//     }
+// });
 
 
 

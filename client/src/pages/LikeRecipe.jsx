@@ -42,7 +42,7 @@ const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
       if (error.response && error.response.status === 400) {
         alert(error.response.data.error || "Recipe is not liked by the user");
       } else {
-        alert("Failed to like recipe");
+        alert("You are unauthorized to do this. Please login or register first");
       }
     }
   };
