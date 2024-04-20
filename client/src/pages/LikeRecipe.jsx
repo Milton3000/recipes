@@ -1,9 +1,16 @@
 // LikeRecipe.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
   const [liked, setLiked] = useState(false);
+
+  useEffect(() => {
+    // Load liked recipe IDs from localStorage on component mount
+    let savedLikes = JSON.parse(localStorage.getItem('likedRecipes'));
+    savedLikes = Array.isArray(savedLikes) ? savedLikes : []; // Ensure savedLikes is an array
+    setLiked(savedLikes.includes(recipe._id.toString())); // Convert recipe ID to string
+  }, [recipe._id]);
 
   const handleLike = async () => {
     try {
@@ -22,6 +29,13 @@ const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
       // Update the like state and trigger the updateLikes function
       setLiked(true);
       updateLikes();
+
+      // Update liked recipes in localStorage
+      let savedLikes = JSON.parse(localStorage.getItem('likedRecipes'));
+      savedLikes = Array.isArray(savedLikes) ? savedLikes : []; // Ensure savedLikes is an array
+      savedLikes.push(recipe._id.toString());
+      localStorage.setItem('likedRecipes', JSON.stringify(savedLikes));
+
     } catch (error) {
       console.error(error);
       // Provide more specific error messages based on different error scenarios
@@ -49,12 +63,20 @@ const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
       // Update the like state and trigger the updateLikes function
       setLiked(false);
       updateLikes();
+
+      // Update liked recipes in localStorage
+      let savedLikes = JSON.parse(localStorage.getItem('likedRecipes'));
+      savedLikes = Array.isArray(savedLikes) ? savedLikes : []; // Ensure savedLikes is an array
+      const index = savedLikes.indexOf(recipe._id.toString());
+      if (index !== -1) {
+        savedLikes.splice(index, 1);
+      }
+      localStorage.setItem('likedRecipes', JSON.stringify(savedLikes));
     } catch (error) {
       console.error(error);
       alert("Failed to unlike recipe");
     }
   };
-  
 
   return (
     <div>
