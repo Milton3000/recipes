@@ -46,8 +46,6 @@ router.put("/", verifyToken, async (req, res) => {
     }
 });
 
-// Add this DELETE route to your recipesRouter
-
 router.delete("/", verifyToken, async (req, res) => {
     try {
         const { recipeID, userID } = req.body;
@@ -96,84 +94,6 @@ router.get("/savedRecipes/:userID", async (req, res) => {
 
 // Above code: Trying to get those where their ID is in the user.savedRecipes. So saved recipes from the user is an array of recipe id's.
 // So we want to grab the saved recipes where their id is inside of the list over here: _id: {$in: user.savedRecipes }.
-
-// PUT REQUEST FOR 
-
-router.put("/like/:recipeID", verifyToken, async (req, res) => {
-    try {
-        const { userID } = req.body;
-        console.log("Liking recipe for user:", userID);
-        // Check if the user is the creator of the recipe or if recipe exists
-        const recipe = await RecipeModel.findById(req.params.recipeID);
-        if (!recipe) {
-            return res.status(404).json({ error: "Recipe not found" });
-        }
-        if (recipe.userOwner === userID) {
-            return res.status(403).json({ error: "You can't like your own recipe" });
-        }
-
-        // Find the user
-        const user = await UserModel.findById(userID);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        // Check if the user has likedRecipes array
-        if (!user.likedRecipes) {
-            user.likedRecipes = [];
-        }
-
-        const index = user.likedRecipes.indexOf(req.params.recipeID);
-        if (index !== -1) {
-            // If already liked, remove the like
-            user.likedRecipes.splice(index, 1);
-        } else {
-            // If not liked, add the like
-            user.likedRecipes.push(req.params.recipeID);
-        }
-        await user.save();
-
-        res.json({ success: true });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-// // Backend: recipes.js KAN SKIPPA FÖRMODLIGEN, KÖR BARA PUT.
-// router.delete("/like/:recipeID", verifyToken, async (req, res) => {
-//     try {
-//         const { userID } = req.query;
-//         console.log("Unliking recipe for user:", userID);
-//         // Find the user
-//         const user = await UserModel.findById(userID);
-//         if (!user) {
-//             return res.status(404).json({ error: "User not found" });
-//         }
-
-//         // Check if the user has likedRecipes array
-//         if (!user.likedRecipes) {
-//             user.likedRecipes = [];
-//         }
-
-//         // Check if the recipe is in the user's likedRecipes
-//         const index = user.likedRecipes.indexOf(recipeID);
-//         if (index !== -1) {
-//             // If the recipe is liked, remove it from the likedRecipes array
-//             user.likedRecipes.splice(index, 1);
-//             await user.save();
-//             res.json({ success: true });
-//         } else {
-//             // If the recipe is not liked, send an error message
-//             res.status(404).json({ error: "Recipe is not liked by the user" });
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: "Internal Server Error" });
-//     }
-// });
-
-
 
 export {router as recipesRouter};
 
