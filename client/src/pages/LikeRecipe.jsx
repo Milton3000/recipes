@@ -1,4 +1,3 @@
-// LikeRecipe.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -17,70 +16,48 @@ const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
       console.log("Liking recipe...");
       // Check if the user is the creator of the recipe or recipe is undefined
       if (!recipe || userID === recipe.userOwner) {
-        alert("You can't like your own recipe.");
-        return;
+          alert("You can't like your own recipe.");
+          return;
       }
-
-      // Send the like request
-      await axios.put(`http://localhost:3001/recipes/like/${recipe._id}`, { userID }, {
-        headers: { authorization: authToken }
-      });
-
-      // Update the like state and trigger the updateLikes function
-      setLiked(true);
-      updateLikes();
-
-      // Update liked recipes in localStorage
-      let savedLikes = JSON.parse(localStorage.getItem('likedRecipes'));
-      savedLikes = Array.isArray(savedLikes) ? savedLikes : []; // Ensure savedLikes is an array
-      savedLikes.push(recipe._id.toString());
-      localStorage.setItem('likedRecipes', JSON.stringify(savedLikes));
-
-    } catch (error) {
-      console.error(error);
-      // Provide more specific error messages based on different error scenarios
-      if (error.response && error.response.status === 400) {
-        alert(error.response.data.error || "Recipe is not liked by the user");
+  
+      // Check if the recipe is already liked
+      if (liked) {
+        // Send the unlike request
+        await axios.put(`http://localhost:3001/liked-recipes/${recipe._id}/unlike`, { userID: recipe.userOwner }, {
+            headers: { authorization: authToken }
+        });
       } else {
-        alert("You are unauthorized to do this. Please login or register first");
+        // Send the like request
+        await axios.put(`http://localhost:3001/liked-recipes/${recipe._id}/like`, { userID: recipe.userOwner }, {
+            headers: { authorization: authToken }
+        });
       }
-    }
-  };
-
-  const handleUnlike = async () => {
-    try {
-      console.log("Unliking recipe...");
-      // Check if the user is the creator of the recipe or recipe is undefined
-      if (!recipe || userID === recipe.userOwner) {
-        alert("You can't like your own recipe.");
-        return;
-      }
-
-      // Send the like request
-      await axios.put(`http://localhost:3001/recipes/like/${recipe._id}`, { userID }, {
-        headers: { authorization: authToken }
-      });
-      // Update the like state and trigger the updateLikes function
-      setLiked(false);
+  
+      // Toggle the like state and trigger the updateLikes function
+      setLiked(!liked);
       updateLikes();
-
+  
       // Update liked recipes in localStorage
       let savedLikes = JSON.parse(localStorage.getItem('likedRecipes'));
       savedLikes = Array.isArray(savedLikes) ? savedLikes : []; // Ensure savedLikes is an array
-      const index = savedLikes.indexOf(recipe._id.toString());
-      if (index !== -1) {
-        savedLikes.splice(index, 1);
+      if (liked) {
+        // Remove recipe ID from liked recipes if unliking
+        savedLikes = savedLikes.filter(id => id !== recipe._id.toString());
+      } else {
+        savedLikes.push(recipe._id.toString());
       }
       localStorage.setItem('likedRecipes', JSON.stringify(savedLikes));
+  
     } catch (error) {
-      console.error(error);
-      alert("Failed to unlike recipe");
+        console.error(error);
+        // Handle errors
     }
   };
+  
 
   return (
     <div>
-      <button onClick={liked ? handleUnlike : handleLike} className={`btn ${liked ? 'btn-primary' : 'btn-outline-primary'}`} disabled={!recipe || userID === recipe.userOwner}>
+      <button onClick={handleLike} className={`btn ${liked ? 'btn-primary' : 'btn-outline-primary'}`} disabled={!recipe || userID === recipe.userOwner}>
         {liked ? "Unlike" : "Like"}
       </button>
     </div>

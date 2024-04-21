@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+// models/Recipes.js
+import mongoose from 'mongoose';
 
 const RecipeSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -6,13 +7,10 @@ const RecipeSchema = new mongoose.Schema({
   instructions: { type: String, required: true },
   imageUrl: { type: String, required: true },
   cookingTime: { type: Number, required: true },
-  userOwner: { type: mongoose.Schema.Types.ObjectId, ref: "users", required: true},
+  userOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
+  likes: { type: Number, default: 0 }, // New field to store the number of likes
 });
 
-// export const RecipeModel = mongoose.model("recipes", RecipeModel);
+const RecipeModel = mongoose.model('recipes', RecipeSchema);
 
-const RecipeModel = mongoose.model("recipes", RecipeSchema); // Initialize RecipeModel First
-
-export { RecipeModel }; // Export RecipeModel after initialization
-
-
+export { RecipeModel };

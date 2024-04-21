@@ -52,14 +52,14 @@ const Home = () => {
 
       if (alreadySaved) {
         // If already saved, remove it from saved recipes
-        const response = await axios.delete("http://localhost:3001/recipes", {
+        await axios.delete("http://localhost:3001/recipes", {
           data: { recipeID, userID },
           headers: { authorization: authToken }
         });
         setSavedRecipes(savedRecipes.filter(id => id !== recipeID));
       } else {
         // If not saved, save it
-        const response = await axios.put("http://localhost:3001/recipes", {
+        await axios.put("http://localhost:3001/recipes", {
           recipeID,
           userID
         }, {
@@ -117,6 +117,7 @@ const Home = () => {
                     <LikeRecipe recipe={recipe} userID={userID} authToken={authToken} updateLikes={updateLikes} />
                   )}
                 </div>
+                <span>{recipe.likes} Likes</span> {/* Display number of likes */}
               </div>
             </div>
           </div>
