@@ -114,7 +114,7 @@ const Home = () => {
                     <LikeRecipe recipe={recipe} userID={userID} authToken={authToken} updateLikes={updateLikes} />
                   )}
                 </div>
-                <span>{recipe.likes} Likes</span>
+                <span>{recipe.likes} ❤️</span>
               </div>
               {recipe.userOwner === userID && (
                 <div className="card-footer">
