@@ -58,7 +58,6 @@ const CreateRecipe = () => {
       console.error(error);
     }
   };
-  console.log(recipe.ingredients);
   return (
     <div className='create-recipe'>
 

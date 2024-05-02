@@ -1,0 +1,19 @@
+// Middlewere for authentication
+
+// If we don't send a token from the Frontend we're sending back a 401, if the token is wrong, we send back a 403
+
+import jwt from "jsonwebtoken";
+
+export const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (token) {
+    jwt.verify(token, "secret", (err) => {
+      if (err) return res.sendStatus(403);
+      next();
+    });
+  } else {
+    res.sendStatus(401);
+  }
+};
+
+// 403 not authorized user

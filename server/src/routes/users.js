@@ -1,14 +1,25 @@
+// routes/users.js
+
 import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { UserModel } from "../models/Users.js";
+import { verifyToken } from "../middleware/authMiddleware.js"; // Importing the middleware
 
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
+// Middleware to log requests
+const logRequests = (req, res, next) => {
+  console.log(`[${new Date().toLocaleString()}] ${req.method} ${req.originalUrl}`);
+  next();
+};
+
+// Apply the logRequests middleware to /register and /login endpoints
+router.post("/register", logRequests, async (req, res) => {
   const { username, password } = req.body;
 
   // Making request to this collection here. It will return a promise so either try/catch or async/await.
+
   const user = await UserModel.findOne({ username });
 
   if (user) {
@@ -23,7 +34,7 @@ router.post("/register", async (req, res) => {
   res.json({ message: " User Registered Successfully!" });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", logRequests, async (req, res) => {
   const { username, password } = req.body;
   console.log("Received login request for username:", username);
 
@@ -54,26 +65,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
-
-
 export { router as userRouter };
-
-
-// Middlewere for authentication
-
-// If we don't send a token from the Frontend we're sending back a 401, if the token is wrong, we send back a 403
-
-export const verifyToken = (req, res, next) => {
-const token = req.headers.authorization;
-if (token) {
-  jwt.verify(token, "secret", (err) => {
-    if (err) return res.sendStatus(403);
-    next();
-  });
-} else {
-  res.sendStatus(401);
-}
-};
-
-// 403 not authorized user

@@ -1,6 +1,6 @@
 // routes/LikedRecipesRouter.js
 import express from 'express';
-import { verifyToken } from './users.js';
+import { verifyToken } from '../middleware/authMiddleware.js';
 import { RecipeModel } from '../models/Recipes.js';
 import { UserModel } from '../models/Users.js';
 import { LikeModel } from '../models/LikeModel.js'; // Import LikeModel
