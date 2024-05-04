@@ -5,6 +5,7 @@ const DeleteRecipe = ({ recipeID, userID, authToken, updateRecipes }) => {
   const handleDelete = async () => {
     if (window.confirm("Are you sure you want to delete this recipe?")) {
       try {
+        console.log("recipeID:", recipeID); // Add this line
         await axios.delete(`http://localhost:3001/delete-recipe/${recipeID}`, {
           data: { userID },
           headers: { authorization: authToken }

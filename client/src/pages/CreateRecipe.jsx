@@ -87,6 +87,7 @@ const CreateRecipe = () => {
 
         <label htmlFor='cookingTime'> Cooking Time (minutes) </label>
         <input type='number' id='cookingTime' name='cookingTime' onChange={handleChange} />
+        <br/>
 
         <button type='submit'> Create Recipe </button>
       </form>

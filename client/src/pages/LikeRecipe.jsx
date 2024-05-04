@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useCookies } from "react-cookie";
 
 const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
   const [liked, setLiked] = useState(false);
+  const [cookies, _] = useCookies(["access_token"]); 
 
   useEffect(() => {
     // Load liked recipe IDs from localStorage on component mount
@@ -19,6 +21,11 @@ const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
           alert("You can't like your own recipe.");
           return;
       }
+      if (!cookies.access_token) {
+        alert("You are not authorized to do this. Please login or register first.");
+        return;
+      }
+  
   
       // Check if the recipe is already liked
       if (liked) {

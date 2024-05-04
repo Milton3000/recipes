@@ -29,11 +29,21 @@ const SavedRecipes = () => {
             <div>
               <h2>{recipe.name}</h2>
             </div>
+            <div className="card-text">
+    <strong>Ingredients:</strong>
+    {recipe.ingredients.map((ingredient, index) => (
+      <span key={index}>
+        {index > 0 && ", "} {/* Add comma and space for all ingredients except the first one */}
+        {ingredient}
+      </span>
+    ))}
+  </div>
             <div className='instructions'>
-              <p>{recipe.instructions}</p>
+              <span> <strong> How to: </strong>{recipe.instructions}</span>
             </div>
             <img src={recipe.imageUrl} alt={recipe.name} />
-            <p>Cooking Time: {recipe.cookingTime} (minutes)</p>
+            <br/>
+            <span>Cooking Time: {recipe.cookingTime} (minutes)</span>
           </li>
         ))}
       </ul>

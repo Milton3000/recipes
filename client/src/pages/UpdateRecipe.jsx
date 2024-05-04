@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import UpdateRecipeModal from './UpdateRecipeModal';
 
-const UpdateRecipe = ({ recipeID, userID, authToken, updateRecipes }) => {
+const UpdateRecipe = ({ recipeID, userID, authToken, updateRecipes, recipe }) => {
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -24,6 +24,7 @@ const UpdateRecipe = ({ recipeID, userID, authToken, updateRecipes }) => {
           userID={userID}
           authToken={authToken}
           updateRecipes={updateRecipes}
+          recipe={recipe}
         />
       )}
     </>

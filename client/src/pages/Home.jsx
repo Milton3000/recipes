@@ -48,12 +48,13 @@ const Home = () => {
       }
   
       const alreadySaved = savedRecipes.includes(recipeID);
-
+  
       if (alreadySaved) {
         await axios.delete("http://localhost:3001/recipes", {
           data: { recipeID, userID },
           headers: { authorization: authToken }
         });
+        console.log("Recipe unsaved:", recipeID);
         setSavedRecipes(savedRecipes.filter(id => id !== recipeID));
       } else {
         await axios.put("http://localhost:3001/recipes", {
@@ -62,13 +63,14 @@ const Home = () => {
         }, {
           headers: { authorization: authToken }
         });
+        console.log("Recipe saved:", recipeID);
         setSavedRecipes([...savedRecipes, recipeID]);
       }
     } catch (error) {
       console.error(error);
     }
   };
-
+  
   const isRecipeSaved = (id) => savedRecipes.includes(id);
 
   const updateRecipes = async () => {
@@ -97,10 +99,20 @@ const Home = () => {
           <div key={recipe._id} className="col-md-3 mb-4">
             <div className="card h-100">
               <div className="card-body">
-                <h5 className="card-title">{recipe.name}</h5>
-                <p className="card-text">{recipe.instructions}</p>
-                <p className="card-text">Cooking Time: {recipe.cookingTime} (minutes)</p>
+                <h3 className="card-title">{recipe.name}</h3>
+                <span className="card-text">{recipe.instructions}</span>
+                <div className="card-text">
+    <strong>Ingredients:</strong>
+    {recipe.ingredients.map((ingredient, index) => (
+      <span key={index}>
+        {index > 0 && ", "} {/* Add comma and space for all ingredients except the first one */}
+        {ingredient}
+      </span>
+    ))}
+  </div>
+
                 <img src={recipe.imageUrl} className="card-img-top" alt={recipe.name} />
+                <span className="card-text">Cooking Time: {recipe.cookingTime} (minutes)</span>
               </div>
               <div className="card-footer d-flex justify-content-between align-items-center">
                 <div>
@@ -118,7 +130,7 @@ const Home = () => {
               </div>
               {recipe.userOwner === userID && (
                 <div className="card-footer">
-                  <UpdateRecipe recipeID={recipe._id} userID={userID} authToken={authToken} updateRecipes={updateRecipes} />
+                  <UpdateRecipe recipeID={recipe._id} userID={userID} authToken={authToken} recipe={recipe} updateRecipes={updateRecipes} />
                 </div>
               )}
             </div>

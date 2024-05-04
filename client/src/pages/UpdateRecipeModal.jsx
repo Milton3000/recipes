@@ -15,13 +15,13 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-const UpdateRecipeModal = ({ isOpen, onRequestClose, recipeID, userID, authToken, updateRecipes }) => {
+const UpdateRecipeModal = ({ isOpen, onRequestClose, recipeID, userID, authToken, updateRecipes, recipe }) => {
   const [formData, setFormData] = useState({
-    name: "",
-    ingredients: [""], // Initial ingredient field
-    instructions: "",
-    imageUrl: "",
-    cookingTime: 0
+    name: recipe.name || "",
+    ingredients: recipe.ingredients || [""],
+    instructions: recipe.instructions || "",
+    imageUrl: recipe.imageUrl || "",
+    cookingTime: recipe.cookingTime || 0
   });
 
   const handleChange = (e) => {
