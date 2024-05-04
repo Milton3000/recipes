@@ -102,10 +102,10 @@ const Home = () => {
                 <h3 className="card-title">{recipe.name}</h3>
                 <span className="card-text">{recipe.instructions}</span>
                 <div className="card-text">
-    <strong>Ingredients:</strong>
+    <strong>Ingredients: </strong>
     {recipe.ingredients.map((ingredient, index) => (
       <span key={index}>
-        {index > 0 && ", "} {/* Add comma and space for all ingredients except the first one */}
+        {index > 0 && ", "}
         {ingredient}
       </span>
     ))}
@@ -114,9 +114,9 @@ const Home = () => {
                 <img src={recipe.imageUrl} className="card-img-top" alt={recipe.name} />
                 <span className="card-text">Cooking Time: {recipe.cookingTime} (minutes)</span>
               </div>
-              <div className="card-footer d-flex justify-content-between align-items-center">
+              <div className="card-footer d-flex justify-content-between align-items-center mb-2">
                 <div>
-                  <button onClick={() => saveRecipe(recipe._id)} className={`btn ${isRecipeSaved(recipe._id) ? 'btn-secondary' : 'btn-primary'}`}>
+                  <button onClick={() => saveRecipe(recipe._id)} className={`mb-2 btn ${isRecipeSaved(recipe._id) ? 'btn-secondary' : 'btn-primary'}`}>
                     {isRecipeSaved(recipe._id) ? "Unsave" : "Save"}
                   </button>
                   {recipe.userOwner === userID && (

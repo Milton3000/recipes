@@ -64,7 +64,7 @@ const LikeRecipe = ({ recipe, userID, authToken, updateLikes }) => {
 
   return (
     <div>
-      <button onClick={handleLike} className={`btn ${liked ? 'btn-primary' : 'btn-outline-primary'}`} disabled={!recipe || userID === recipe.userOwner}>
+      <button onClick={handleLike} className={`btn ${liked ? 'btn-secondary' : 'btn-primary'}`} disabled={!recipe || userID === recipe.userOwner}>
         {liked ? "Unlike" : "Like"}
       </button>
     </div>

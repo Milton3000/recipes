@@ -9,7 +9,7 @@ const [cookies, setCookies] = useCookies(["access_token"]);
 const navigate = useNavigate();
 
 // Setting the access_token to be an empty cookie
-// Then we clear the localStorage from userID4
+// Then we clear the localStorage from userID
 // Then Navigate to our Auth page. 
 
 const logout = () => {
