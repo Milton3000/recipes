@@ -51,13 +51,10 @@ router.delete("/", verifyToken, async (req, res) => {
     try {
         const { recipeID, userID } = req.body;
         
-        // Find the user
         const user = await UserModel.findById(userID);
         if (!user) {
             return res.status(404).json({ error: "User not found" });
         }
-
-        // Remove the recipe ID from the user's savedRecipes array
         user.savedRecipes = user.savedRecipes.filter(savedRecipeID => savedRecipeID.toString() !== recipeID.toString());
         await user.save();
 
@@ -72,8 +69,8 @@ router.delete("/", verifyToken, async (req, res) => {
 
 // In the Frontend we want to get a list of all the recipe ID's that a user who is logged in to at the moment have saved. Need to make a specific route that is going to get the ID's that were saved by a user.
 
-router.get("/savedRecipes/ids/:userID", getSavedRecipeIDs); // Linking to the function
-router.get("/savedRecipes/:userID", getSavedRecipes); // Linking to the function
+router.get("/savedRecipes/ids/:userID", getSavedRecipeIDs);
+router.get("/savedRecipes/:userID", getSavedRecipes); 
 
 
 export {router as recipesRouter};

@@ -1,31 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useGetUserID } from '../hooks/useGetUserID';
-import { useNavigate } from 'react-router-dom'
-import { useCookies } from "react-cookie";
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const CreateRecipe = () => {
   const userID = useGetUserID();
-  const [cookies, _] = useCookies(["access_token"]);
+  const [cookies, _] = useCookies(['access_token']);
 
-  // An object containing all of the inputs
   const [recipe, setRecipe] = useState({
-    name: "",
+    name: '',
     ingredients: [],
-    instructions: "",
-    imageUrl: "",
+    instructions: '',
+    imageUrl: '',
     cookingTime: 0,
     userOwner: userID,
   });
 
   const navigate = useNavigate();
 
-
-
-  //Quite a big form and all of the functions are the same so we create a handleChange that will do all of the logic.
-  // Function below is just changing one specific part of the object.
-
-  
   const handleChange = (event) => {
     const { name, value } = event.target;
     setRecipe({ ...recipe, [name]: value });
@@ -33,66 +26,75 @@ const CreateRecipe = () => {
 
   const handleIngredientChange = (event, index) => {
     const { value } = event.target;
-    const ingredients = recipe.ingredients; // Just making a copy of it.
-    ingredients[index] = value; // Change the element in the index equal to index.
+    const ingredients = [...recipe.ingredients];
+    ingredients[index] = value;
     setRecipe({ ...recipe, ingredients });
   };
 
-
-  // Put a name property on each input (down below) so it serves as the key equal to the object information, so whenever we want to handle the change we can modify by accessing the name. Each of them refering to each specific object info.
-
-  // Setting the recipe to whatever it was before (...recipe). Called the Spread operator. 
-  // Whatever we put after the comma, is what's gonna change in the object. In this case we're changing the ingredients field. Initially it's an empty array, but now we're changing it to whatever the ingredients list was before (...spread operator again). So now it just adds an empty string to the end of the array. 
-  // We can generate the ingredients input based on the {recipe.ingredients list.} So we will .map the item. 
   const addIngredient = () => {
-    setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
-  }
+    setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ''] });
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:3001/recipes", recipe, { headers: { authorization: cookies.access_token }, } );
-      alert("Recipe Created");
-      navigate("/");
+      await axios.post('http://localhost:3001/recipes', recipe, {
+        headers: { authorization: cookies.access_token },
+      });
+      alert('Recipe Created');
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
-    <div className='create-recipe'>
+    <div
+      className="container-fluid d-flex justify-content-center align-items-center"
+      style={{
+        backgroundImage: `url('/bg.jpg')`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        minHeight: '100vh', 
+      }}
+    >
+<div className="create-recipe" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
+        <h2 className="text-center">Create Recipe</h2>
+        <form onSubmit={onSubmit}>
+          <label htmlFor="name" style={{ fontSize: '20px' }}>Name</label>
+          <input type="text" id="name" name="name" onChange={handleChange} />
 
-      <h2> Create Recipe </h2>
-      <form onSubmit={onSubmit}>
-        <label htmlFor='name'> Name </label>
-        <input type='text' id='name' name='name' onChange={handleChange} />
+          <label htmlFor="ingredients" style={{ fontSize: '20px' }}>Ingredients</label>
+          {recipe.ingredients.map((ingredient, index) => (
+            <input
+              key={index}
+              type="text"
+              name="ingredients"
+              value={ingredient}
+              onChange={(event) => handleIngredientChange(event, index)}
+            />
+          ))}
 
-        <label htmlFor="ingredients">Ingredients</label>
-        {recipe.ingredients.map((ingredient, index) => (
-          <input
-            key={index}
-            type="text"
-            name="ingredients"
-            value={ingredient}
-            onChange={(event) => handleIngredientChange(event, index)}
-          />
-        ))}
+          <button type="button" onClick={addIngredient}>
+            Add Ingredient
+          </button>
 
-        <button onClick={addIngredient} type='button'> Add Ingredient </button>
+          <label htmlFor="instructions" style={{ fontSize: '20px' }}>Instructions</label>
+    <textarea id="instructions" name="instructions" onChange={handleChange}></textarea>
 
-        <label htmlFor='instructions'> Inscructions </label>
-        <textarea id='instructions' name='instructions' onChange={handleChange}></textarea>
+    <label htmlFor="imageUrl" style={{ fontSize: '20px' }}>Image URL</label>
+    <input type="text" id="imageUrl" name="imageUrl" onChange={handleChange} />
 
-        <label htmlFor='imageUrl'> Image URL </label>
-        <input type='text' id='imageUrl' name='imageUrl' onChange={handleChange} />
+    <label htmlFor="cookingTime" style={{ fontSize: '20px' }}>Cooking Time (minutes)</label>
+    <input type="number" id="cookingTime" name="cookingTime" onChange={handleChange} />
+    <br />
 
-        <label htmlFor='cookingTime'> Cooking Time (minutes) </label>
-        <input type='number' id='cookingTime' name='cookingTime' onChange={handleChange} />
-        <br/>
-
-        <button type='submit'> Create Recipe </button>
-      </form>
+          <button type="submit" style={{ fontSize: '20px' }}>Create Recipe</button>
+        </form>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateRecipe
+export default CreateRecipe;

@@ -1,58 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
   return (
-    <div className='auth'>
-
-      <Login />
-      <Register />
-
+    <div className='auth' style={{ backgroundImage: `url('/bg.jpg')`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', minHeight: '100vh' }}>
+      <div className="container">
+        <div className="row justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+          <div className="col-md-6 d-flex justify-content-center align-items-center"> {/* Updated to d-flex justify-content-center align-items-center */}
+            <div className='auth-forms bg-white rounded' style={{ opacity: '0.7', width: '80%' }}> {/* Added width: '100%' */}
+              <Login />
+              <Register />
+            </div>
+          </div>
+          <div className="col-md-0">
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
+
+
+
+
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-// eslint-disable-next-line 
-  const [_, setCookies] = useCookies(["access_token"]); // Define the cookie we want to use, only need access to the function that sets the cookie.
-
-  const navigate = useNavigate(); // This is a function that when you call it, it will redirect you to whichever path you put inside.
-
+  const [_, setCookies] = useCookies(["access_token"]);
+  const navigate = useNavigate();
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    // Sending back our authentication token.
-    // This response should receive everything that is sent back from the API.
     try {
       const response = await axios.post("http://localhost:3001/auth/login", {
         username,
         password
       });
-  
       if (response.data.message === "User Doesn't Exist.") {
-        // Display an alert if the user doesn't exist
         alert("User doesn't exist. Please register first.");
         return;
       } else if (response.data.message === "Username or Password Is Incorrect") {
-        // Display an alert if the username or password is incorrect
         alert("Username or password is incorrect. Please try again.");
         return;
       }
-  
-      // Set the token into our Cookies
       setCookies("access_token", response.data.token);
-      // After setting the cookie to have that value (token), we want to store our userID that we're sending back inside of our localstorage for quick access.
       window.localStorage.setItem("userID", response.data.userID);
-      navigate("/"); // Navigates to Home.
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
   };
-  
 
   return (
     <Form
@@ -72,7 +72,6 @@ const Register = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    // Not sending anything from this request, just try to create the user.
     try {
       await axios.post("http://localhost:3001/auth/register", { username, password });
       alert("Registration Completed! Now, login.");
@@ -94,31 +93,26 @@ const Register = () => {
 };
 
 const Form = ({ username, setUsername, password, setPassword, label, onSubmit }) => {
-
   return (
     <div className='auth-container'>
       <form onSubmit={onSubmit}>
-
-        <h2> {label} </h2>
-
+        <h2>{label}</h2>
         <div className='form-group'>
           <label htmlFor='username'>
             Username:
           </label>
           <input type='text' id='username' value={username} onChange={(event => setUsername(event.target.value))} />
         </div>
-
         <div className='form-group'>
           <label htmlFor='password'>
             Password:
           </label>
           <input type='password' id='password' value={password} onChange={(event => setPassword(event.target.value))} />
         </div>
-
-        <button type='submit'> {label} </button>
+        <button type='submit'>{label}</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Auth
+export default Auth;

@@ -8,7 +8,7 @@ import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div className="App">
+
 <Router>
   <Navbar />
   <Routes>
@@ -18,7 +18,7 @@ function App() {
     <Route path="/savedrecipes" element={<SavedRecipes/>} />
   </Routes>
 </Router>
-    </div>
+
   );
 }
 
