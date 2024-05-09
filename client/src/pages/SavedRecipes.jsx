@@ -51,21 +51,21 @@ const SavedRecipes = () => {
 
   return (
     <div className="container-fluid" style={{ backgroundImage: `url('/bg.jpg')`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', minHeight: '100vh' }}>
-<div style={{ 
-  margin: '0 auto', 
-  maxWidth: '300px', 
-}}>
-  <div style={{ 
-    background: 'rgba(255, 255, 255, 0.7)', 
-    padding: '20px', 
-    borderRadius: '5px', 
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)', 
-    marginBottom: '20px', 
-    textAlign: 'center', 
-  }}>
-    <h1 style={{ color: 'black'}}>Saved Recipes</h1>
-  </div>
-</div>
+      <div style={{
+        margin: '0 auto',
+        maxWidth: '300px',
+      }}>
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.7)',
+          padding: '20px',
+          borderRadius: '5px',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+          marginBottom: '20px',
+          textAlign: 'center',
+        }}>
+          <h1 style={{ color: 'black' }}>Saved Recipes</h1>
+        </div>
+      </div>
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-6 g-4">
         {savedRecipes.map((recipe, index) => (
           <div key={recipe._id} className="col">

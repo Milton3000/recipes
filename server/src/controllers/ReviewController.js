@@ -1,4 +1,4 @@
-// controllers/ReviewController.js
+
 import { ReviewModel } from '../models/Review.js';
 
 export const addReview = async (req, res) => {

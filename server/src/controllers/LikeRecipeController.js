@@ -1,4 +1,3 @@
-// controllers/LikeRecipeController.js
 
 import { RecipeModel } from "../models/Recipes.js";
 import { UserModel } from "../models/Users.js";
@@ -22,7 +21,6 @@ export const likeRecipe = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Check if the user has already liked the recipe
     const like = await LikeModel.findOne({ user: userID, recipe: req.params.recipeID });
     if (like) {
       // User already liked the recipe, return success without incrementing likes
@@ -47,16 +45,16 @@ export const unlikeRecipe = async (req, res) => {
 
     // Find the like record associated with the user and recipe
     const like = await LikeModel.findOne({ user: userID, recipe: req.params.recipeID });
-    console.log('Found like:', like); // Add this line for debugging
+    console.log('Found like:', like); // Debugging
     if (!like) {
-      // Handle case when like doesn't exist
-      console.log('No existing like found.'); // Add this line for debugging
+      // Hantera om like inte existerar
+      console.log('No existing like found.'); // Debugging
       return res.json({ success: true, message: 'No existing like found.' });
     }
 
-    // Remove the like record
+    // Ta bort like record
     await LikeModel.deleteOne({ _id: like._id });
-    console.log('Like removed successfully.'); // Add this line for debugging
+    console.log('Like removed successfully.'); // Debugging
 
     // Decrement the like count of the associated recipe
     await RecipeModel.findByIdAndUpdate(req.params.recipeID, { $inc: { likes: -1 } });

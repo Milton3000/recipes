@@ -1,4 +1,3 @@
-// Middlewere for authentication
 
 // If we don't send a token from the Frontend we're sending back a 401, if the token is wrong, we send back a 403
 

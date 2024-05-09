@@ -1,7 +1,7 @@
 import { UserModel } from '../models/Users.js';
 import { RecipeModel } from "../models/Recipes.js";
 
-// Function to get saved recipes IDs
+// Function för aved recipes IDs
 export const getSavedRecipeIDs = async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.userID);
@@ -11,7 +11,7 @@ export const getSavedRecipeIDs = async (req, res) => {
     }
 };
 
-// Function to get saved recipes details
+// Function för saved recipes details
 export const getSavedRecipes = async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.userID);

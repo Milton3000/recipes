@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 const LikeSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true }, // Reference to the user who liked the recipe
-  recipe: { type: mongoose.Schema.Types.ObjectId, ref: 'recipes', required: true }, // Reference to the liked recipe
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true }, // Referens till user som gillade recipe
+  recipe: { type: mongoose.Schema.Types.ObjectId, ref: 'recipes', required: true }, // Referense till liked recipe
 });
 
 // Ensure that each user can only like a recipe once

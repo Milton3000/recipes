@@ -7,7 +7,7 @@ import { getSavedRecipeIDs, getSavedRecipes } from '../controllers/SavedRecipesC
 const router = express.Router();
 
 
-// Don't have any conditions, we want to find all of the documents (recipes) to be shown at the Home page.
+// Don't have any conditions, just want to find all of the documents (recipes) to be shown at the Home page.
 router.get("/", async (req, res) => {
     try {
         const response = await RecipeModel.find({});
@@ -39,7 +39,7 @@ router.put("/", verifyToken, async (req, res) => {
     try {
         const recipe = await RecipeModel.findById(req.body.recipeID);
         const user = await UserModel.findById(req.body.userID);
-        user.savedRecipes.push(recipe); // Want to add it
+        user.savedRecipes.push(recipe); // Addera
         await user.save();
         res.json({ savedRecipes: user.savedRecipes });
     } catch (error) {
@@ -66,8 +66,7 @@ router.delete("/", verifyToken, async (req, res) => {
 });
 
 
-
-// In the Frontend we want to get a list of all the recipe ID's that a user who is logged in to at the moment have saved. Need to make a specific route that is going to get the ID's that were saved by a user.
+// Saved Recipes Routes
 
 router.get("/savedRecipes/ids/:userID", getSavedRecipeIDs);
 router.get("/savedRecipes/:userID", getSavedRecipes); 

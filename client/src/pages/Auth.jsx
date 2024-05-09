@@ -8,8 +8,8 @@ const Auth = () => {
     <div className='auth' style={{ backgroundImage: `url('/bg.jpg')`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', minHeight: '100vh' }}>
       <div className="container">
         <div className="row justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
-          <div className="col-md-6 d-flex justify-content-center align-items-center"> {/* Updated to d-flex justify-content-center align-items-center */}
-            <div className='auth-forms bg-white rounded' style={{ opacity: '0.7', width: '80%' }}> {/* Added width: '100%' */}
+          <div className="col-md-6 d-flex justify-content-center align-items-center"> 
+            <div className='auth-forms bg-white rounded' style={{ opacity: '0.7', width: '80%' }}>
               <Login />
               <Register />
             </div>

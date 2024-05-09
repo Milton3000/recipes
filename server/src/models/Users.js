@@ -6,5 +6,5 @@ const UserSchema = new mongoose.Schema({
     savedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
 });
 
-// Table or Collection called Users
+// Users
 export const UserModel = mongoose.model("users", UserSchema);

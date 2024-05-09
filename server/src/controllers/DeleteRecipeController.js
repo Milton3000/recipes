@@ -6,7 +6,7 @@ export const deleteRecipe = async (req, res) => {
         const { recipeID } = req.params;
         const { userID } = req.body;
 
-        // Find the recipe
+        // Find recipe
         const recipe = await RecipeModel.findById(recipeID);
         if (!recipe) {
             return res.status(404).json({ error: "Recipe not found" });
@@ -17,7 +17,7 @@ export const deleteRecipe = async (req, res) => {
             return res.status(403).json({ error: "You are not authorized to delete this recipe" });
         }
 
-        // Delete the recipe
+        // Delete
         await recipe.deleteOne();
 
         res.json({ success: true });

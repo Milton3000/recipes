@@ -10,7 +10,7 @@ const Review = ({ recipeID, authToken, userID }) => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/reviews/${recipeID}`);
-        setReviews(response.data); 
+        setReviews(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -22,7 +22,7 @@ const Review = ({ recipeID, authToken, userID }) => {
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/reviews", {
+      await axios.post("http://localhost:3001/reviews", {
         recipeId: recipeID,
         userId: userID,
         review,
@@ -30,9 +30,9 @@ const Review = ({ recipeID, authToken, userID }) => {
         headers: { authorization: authToken }
       });
 
-      setReview(""); // Clear the review form
+      setReview(""); // Rensar review form
       const updatedResponse = await axios.get(`http://localhost:3001/reviews/${recipeID}`);
-      setReviews(updatedResponse.data); 
+      setReviews(updatedResponse.data);
     } catch (error) {
       console.error(error);
     }
@@ -51,14 +51,14 @@ const Review = ({ recipeID, authToken, userID }) => {
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
-      <div className="text-center"> 
+      <div className="text-center">
         <h5>Reviews:</h5>
         <ul className="list-group mx-auto" style={{ maxWidth: '300px' }}>
-          {reviews.slice(0, showAllReviews ? reviews.length : 3).map((review, index) => ( 
+          {reviews.slice(0, showAllReviews ? reviews.length : 2).map((review, index) => (
             <li className="list-group-item" key={index}>{review.review}</li>
           ))}
         </ul>
-        {reviews.length > 3 && (
+        {reviews.length > 2 && (
           <button className="btn btn-link mt-2" onClick={toggleReviews}>
             {showAllReviews ? 'Hide' : 'Show All'} Reviews
           </button>

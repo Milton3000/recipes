@@ -148,9 +148,9 @@ const Home = () => {
                   <UpdateRecipe recipeID={recipe._id} userID={userID} authToken={authToken} recipe={recipe} updateRecipes={updateRecipes} />
                 </div>
               )}
-                  <div style={{ fontSize: '20px', padding: '20px' }}>
-      <Review recipeID={recipe._id} authToken={authToken} userID={userID} />
-      </div>
+              <div style={{ fontSize: '20px', padding: '20px' }}>
+                <Review recipeID={recipe._id} authToken={authToken} userID={userID} />
+              </div>
             </div>
           </div>
         ))}

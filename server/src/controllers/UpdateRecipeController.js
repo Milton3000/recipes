@@ -1,4 +1,3 @@
-// controllers/UpdateRecipeController.js
 
 import { RecipeModel } from "../models/Recipes.js";
 
@@ -18,14 +17,14 @@ export const updateRecipe = async (req, res) => {
       return res.status(403).json({ error: "You are not authorized to update this recipe" });
     }
 
-    // Update recipe fields
+    // Uppdatera recipe fields
     recipe.name = name;
     recipe.ingredients = ingredients;
     recipe.instructions = instructions;
     recipe.imageUrl = imageUrl;
     recipe.cookingTime = cookingTime;
 
-    // Save the updated recipe
+    // Save uppdaterade recip
     await recipe.save();
 
     res.json({ success: true });

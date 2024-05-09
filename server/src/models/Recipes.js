@@ -1,4 +1,4 @@
-// models/Recipes.js
+
 import mongoose from 'mongoose';
 
 const RecipeSchema = new mongoose.Schema({
@@ -8,7 +8,7 @@ const RecipeSchema = new mongoose.Schema({
   imageUrl: { type: String, required: true },
   cookingTime: { type: Number, required: true },
   userOwner: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true },
-  likes: { type: Number, default: 0 }, // New field to store the number of likes
+  likes: { type: Number, default: 0 },
 });
 
 const RecipeModel = mongoose.model('recipes', RecipeSchema);

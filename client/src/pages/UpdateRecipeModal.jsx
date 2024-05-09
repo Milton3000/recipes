@@ -1,4 +1,4 @@
-// UpdateRecipeModal.jsx
+
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
@@ -42,7 +42,6 @@ const UpdateRecipeModal = ({ isOpen, onRequestClose, recipeID, userID, authToken
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Check if all required fields are provided
       if (!formData.name || !formData.instructions || !formData.imageUrl || !formData.cookingTime) {
         alert("Please fill in all required fields.");
         return;
@@ -60,7 +59,7 @@ const UpdateRecipeModal = ({ isOpen, onRequestClose, recipeID, userID, authToken
         cookingTime: 0
       });
       updateRecipes();
-      onRequestClose(); // Close the modal after updating recipe
+      onRequestClose();
     } catch (error) {
       console.error(error);
       alert("Failed to update recipe");
