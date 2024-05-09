@@ -7,7 +7,6 @@ import { getSavedRecipeIDs, getSavedRecipes } from '../controllers/SavedRecipesC
 const router = express.Router();
 
 
-// Don't have any conditions, just want to find all of the documents (recipes) to be shown at the Home page.
 router.get("/", async (req, res) => {
     try {
         const response = await RecipeModel.find({});
@@ -30,10 +29,6 @@ router.post("/", verifyToken, async (req, res) => {
     }
 });
 
-
-// We want to be able to save a recipe by changing the model of our Users to include a field called "saved recipes" and that field will be an array of recipes that you saved. Added "Saved Recipes" in UserSchema.
-// userId = To find which user we want to change their saved recipes field.
-// recipeId = To insert into that array.
 
 router.put("/", verifyToken, async (req, res) => {
     try {

@@ -18,47 +18,6 @@ req = used for getting data from whoever made the api request to the endpoint
 
 res = to send the data back to whoever made that api request
 
-router.post("/register", async (req, res) => {
-const { username, password } = req.body;
-});
-
-When we make this API request, we make sure that we send in an object containing the username and password. This is how we define endpoints in an API
-
-
-// useNewUrlParser: true,
-// useUnifiedTopology: true
-
-
-@ Insomnia:
-
-POST: http://localhost:3001/auth/register
-
-Sen JSON: {}
-
-
-        <input type='text' id='username' onChange={(event => setUsername(event.target.value)
-
-        event.target.value = setting the username state to be equal to the value of the field everytime there are any changes in the field
-
-
-        Gör en const Form = ({ username, setUsername, password, setPassword, label }) => {}
-
-        för att re-use detta i både Login och Register komponenterna. Om du tittar i filen så ser du att både Login och Register är typ identiska och använder sig av propsen från Form komponenten. 
-
-
-API POST:
-
- try {
-  await axios.post("http://localhost:3001/auth/register", {username, password});
-  alert("Registration Completed! Now, login.")
- } catch (error) {
-  console.error(error)
- }
-
-Make the post request, put the url, and then put in the object of the body of the request. In this case, username and password, same as we used for the /routes/users.js 
-
-*VIKTIGT*
-
 Måste köra cd client och cd server och sedan npm start på vardera för att både backend och frontend ska connectas. 
 
 
@@ -84,17 +43,11 @@ JSON INFO:
 }
 
 
-USER:
+USERS:
 
-MiltonK
-test123
+Milton
+potatis
 
 Mille
 potatis
 
-
-// Added a check for createdBy
-
-  // Functionality to add it to the button using disabled true/false. Button will not be clickable if it's saved.
-const isRecipeSaved = (id) => savedRecipes && savedRecipes.includes(id);
-// const isRecipeSaved = (id) => savedRecipes.includes(id);
